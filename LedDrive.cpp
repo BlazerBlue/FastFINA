@@ -7,6 +7,7 @@
 LedDrive::LedDrive(int pl)
 {
 	pinLed = pl;
+	digitalWrite(pinLed, LOW); //turnoff PWM on power up
 }
 
 void LedDrive::Init()

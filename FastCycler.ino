@@ -268,7 +268,7 @@ void ledCmds()
 	if (cmdSize == 1)
 	{
 		Serial.println("LED commands 1.Led#.Cmd#.Parameter#");
-		Serial.println("Led# 0 = blue, 1 = red");
+		Serial.println("Led# 0 = pin 9, 1 = pin 10");
 		Serial.println("2.N.0 = initialize");
 		Serial.println("2.N.1 = off");
 		Serial.println("2.N.2 = on");
