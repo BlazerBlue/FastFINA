@@ -13,38 +13,31 @@ LedDrive::LedDrive(int pl)
 void LedDrive::Init()
 {
 	pinMode(pinLed, OUTPUT);
-	analogWrite(pinLed, 255);
+	digitalWrite(pinLed, LOW);
 	stateLed = 0;
 }
 
 void LedDrive::SetPctAmp(int pa)
+/*
+change this routine to read detector once a second
+pa = 1 now means turn on reading, pa = 0 turn off
+for now, just don't run it
+*/
 {
-	if (pa > 100)
-	{
-		Serial.println("Cmd error: Max % intensity = 100");
-		return;
-	}
-	pctAmpRead = pa;
-	pwmAmp = (float)2.55 * (float)(100 - pctAmpRead);
-	/*
-	Serial.print("% max intensity = "); Serial.println(pctAmp);
-	Serial.print("pwmAmp = "); Serial.println(pwmAmp);
-	*/
-	stateLed = 1; //turn LED on
-	analogWrite(pinLed, pwmAmp);
+	Serial.println("Set intensity with pot");
 	return;
 }
 
 void LedDrive::On()
 {
 	stateLed = 1; //turn LED on
-	analogWrite(pinLed, pwmAmp);
+	digitalWrite(pinLed, HIGH);
 }
 
 void LedDrive::Off()
 {
 	stateLed = 0; //turn LED off
-	analogWrite(pinLed, 255);
+	digitalWrite(pinLed, LOW);
 }
 
 int LedDrive::State()

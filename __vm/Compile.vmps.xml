@@ -9,27 +9,52 @@
       <VCCodeMacros />
     </VCCodeModel>
     <BreakPoints>
-      <BreakPoint Index="1" Name="LedDrive.cpp, line 28" Id="848474fe-c49e-4f84-9797-a7626aaf2305" Enabled="1" Message="{pwmAmp}" MessageTextType="2" PreProcessedMessage="{0}" Condition="" ConditionType="1" CurrentHits="0" File="c:\users\ashley\documents\visual studio 2015\githubrepos\fastfina\leddrive.cpp" FileLine="28" FileColumn="1" FunctionName="SetPctAmp(int pa)" FunctionLineOffset="8" FunctionColumnOffset="1" HitCountTarget="1" HitCountType="1" Language="C++" LocationType="3" Tag="&lt;vmbp Id='848474fe-c49e-4f84-9797-a7626aaf2305'/&gt;" Type="1" ToString="System.__ComObject" BreakWhenHit="0">
-        <Source>21	{
-22		if (pa &gt; 100)
-23		{
-24			Serial.println("Cmd error: Max % intensity = 100");
-25			return;
-26		}
-27		pctAmpRead = pa;
---&gt;28		pwmAmp = (float)2.55 * (float)(100 - pctAmpRead);
-29		/*
-30		Serial.print("% max intensity = "); Serial.println(pctAmp);
-31		Serial.print("pwmAmp = "); Serial.println(pwmAmp);
-32		*/
-33		stateLed = 1; //turn LED on
-34		analogWrite(pinLed, pwmAmp);
-35		return;
-36	}
-37	
+      <BreakPoint Index="1" Name="LedDrive.cpp, line 40" Id="77d65edf-662e-4d33-81c1-b353e143ad5a" Enabled="1" Message="{pinLed}{stateLed}" MessageTextType="2" PreProcessedMessage="{0}{1}" Condition="" ConditionType="1" CurrentHits="0" File="c:\users\ashley\documents\visual studio 2015\githubrepos\fastfina\leddrive.cpp" FileLine="40" FileColumn="1" FunctionName="Off()" FunctionLineOffset="3" FunctionColumnOffset="1" HitCountTarget="1" HitCountType="1" Language="C++" LocationType="3" Tag="&lt;vmbp Id='77d65edf-662e-4d33-81c1-b353e143ad5a'/&gt;" Type="1" ToString="System.__ComObject" BreakWhenHit="0">
+        <Source>33		stateLed = 1; //turn LED on
+34		digitalWrite(pinLed, HIGH);
+35	}
+36	
+37	void LedDrive::Off()
+38	{
+39		stateLed = 0; //turn LED off
+--&gt;40		digitalWrite(pinLed, LOW);
+41	}
+42	
+43	int LedDrive::State()
+44	{
+45		return stateLed;
+46	}
+47	
+48	void LedDrive::ListLedParameters()
+49	{
 </Source>
         <MessageVariables>
-          <MessageVariable Name="pwmAmp" Index="1" />
+          <MessageVariable Name="pinLed" Index="1" />
+          <MessageVariable Name="stateLed" Index="2" />
+        </MessageVariables>
+      </BreakPoint>
+      <BreakPoint Index="2" Name="LedDrive.cpp, line 34" Id="5c4db8a8-6390-446e-920a-2016133a45df" Enabled="1" Message="{pinLed}{stateLed}" MessageTextType="2" PreProcessedMessage="{0}{1}" Condition="" ConditionType="1" CurrentHits="0" File="c:\users\ashley\documents\visual studio 2015\githubrepos\fastfina\leddrive.cpp" FileLine="34" FileColumn="1" FunctionName="On()" FunctionLineOffset="3" FunctionColumnOffset="1" HitCountTarget="1" HitCountType="1" Language="C++" LocationType="3" Tag="&lt;vmbp Id='5c4db8a8-6390-446e-920a-2016133a45df'/&gt;" Type="1" ToString="System.__ComObject" BreakWhenHit="0">
+        <Source>27		Serial.println("Set intensity with pot");
+28		return;
+29	}
+30	
+31	void LedDrive::On()
+32	{
+33		stateLed = 1; //turn LED on
+--&gt;34		digitalWrite(pinLed, HIGH);
+35	}
+36	
+37	void LedDrive::Off()
+38	{
+39		stateLed = 0; //turn LED off
+40		digitalWrite(pinLed, LOW);
+41	}
+42	
+43	int LedDrive::State()
+</Source>
+        <MessageVariables>
+          <MessageVariable Name="pinLed" Index="1" />
+          <MessageVariable Name="stateLed" Index="2" />
         </MessageVariables>
       </BreakPoint>
     </BreakPoints>

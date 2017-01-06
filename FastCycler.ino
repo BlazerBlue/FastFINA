@@ -217,7 +217,8 @@ void servoCmds()
 	if (cmdSize == 1)
 	{
 		Serial.println("Servo command format: 1.SN.Cmd.Parameter");
-		Serial.println("SN 0 = shuttle, 1 = heaters");
+		Serial.println("SN 0 = shuttle = pin 5");
+		Serial.println("SN 1 = heaters = pin 6");
 		Serial.println("1.SN.0 = home/attach/initialize");
 		Serial.println("1.SN.1.LN = go to location number LN");
 		Serial.println("1.SN.2.PW = go to PW(900-2100)");
@@ -272,8 +273,6 @@ void ledCmds()
 		Serial.println("2.N.0 = initialize");
 		Serial.println("2.N.1 = off");
 		Serial.println("2.N.2 = on");
-		Serial.println("2.N.3.%maxAmps = set %maxamps");
-		Serial.println("2.N.4 = store %maxAmps");
 	}
 	else
 	{
@@ -293,18 +292,7 @@ void ledCmds()
 			if (LedNumber == 0) blueLed.On();
 			else redLed.On();
 			break;
-		case 3: //2.N.3.%MaxAmps set % maxAmps 
-			if (LedNumber == 0) blueLed.SetPctAmp(cmdParameter[2]);
-			else redLed.SetPctAmp(cmdParameter[2]);
-			break;
-		/* is this really needed even with EEPROM, why not store when set
-		case 4: //2.N.4 store %MaxAmps
-		if (LedNumber == 0) blueLed.StorePctAmp();
-		else redLed.StorePctAmp();
-		break;
-		*/
 		}
-	
 	}
 
 }
