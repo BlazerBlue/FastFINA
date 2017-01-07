@@ -65,6 +65,7 @@ LedDrive redLed(pinRedLed);
 //3. Detector set up, Arduino only reads once and sends result to app on PC
 int pinAnalogDetector = 0;
 int msDelayDetector = 1;
+int nRepsRead = 10;
 
 //0. Set up parameters for cycling, store here, pass to CycleDrive when created
 int setCycle[6] = { 3,5,1,2,1,1 };
@@ -159,10 +160,44 @@ void loop()
 
 void detectCmds()
 {
-	int detectRead = analogRead(pinAnalogDetector);
-	delay(msDelayDetector);
-	Serial.print("Detector read = "); Serial.println(detectRead);
-	return;
+	if (cmdSize == 1)
+	{
+		Serial.println("Detect commands");
+		Serial.println("3.0 read once");
+		Serial.println("3.1 read N times");
+		Serial.println("3.2.N read times to N");
+		return;
+	}
+	else
+	{
+		int DetectCmdNumber = cmdParameter[0];
+		switch (DetectCmdNumber)
+		{
+		case 0: // read once
+			int rd;
+			rd = analogRead(pinAnalogDetector);
+			delay(msDelayDetector);
+			Serial.print("Detector read = "); Serial.println(rd);
+			break;
+		case 1:  // read N times
+			float sumReads = 0;
+			float sumReadsSq = 0;
+			for (int i = 0; i < nRepsRead; i++)
+			{
+				int r = analogRead(pinAnalogDetector);
+				Serial.println(r);
+				sumReads += r ;
+				sumReadsSq += r^2;
+			}
+			float avgRead = sumReads / nRepsRead;
+			float varRead = sumReadsSq-nRepsRead * avgRead*avgRead;
+			float sdRead = sqrt(varRead);
+			Serial.print("N Reads = "); Serial.println(nRepsRead);
+			Serial.print("Mean = "); Serial.println(avgRead);
+			Serial.print("Var = "); Serial.println(varRead);
+			break;
+		}
+	}
 }
 void cycleCmds()
 {
