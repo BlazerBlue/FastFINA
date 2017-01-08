@@ -195,7 +195,7 @@ void detectCmds()
 			for (int i = 0; i < nRepsRead; i++)
 			{
 				float r = analogRead(pinAnalogDetector);
-				Serial.println(r);
+				//Serial.println(r);
 				sumReads += r ;
 				sumReadsSq += r*r;
 			}
