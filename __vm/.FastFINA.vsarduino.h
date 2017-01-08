@@ -10,9 +10,8 @@
 
 #ifndef _VSARDUINO_H_
 #define _VSARDUINO_H_
-#define _VMDEBUG 1
 #define F_CPU 48000000L
-#define ARDUINO 106011
+#define ARDUINO 106012
 #define ARDUINO_SAMD_ZERO
 #define ARDUINO_ARCH_SAMD
 #define __SAMD21G18A__
@@ -48,10 +47,11 @@ typedef unsigned char byte;
 extern "C" void __cxa_pure_virtual() {;}
 
 
-
+#include <SAMD21G18a.h>
 #include <arduino.h>
 #include <pins_arduino.h> 
 #include <variant.h> 
+#include <variant.cpp> 
 #undef cli
 #define cli()
 #include "FastCycler.ino"

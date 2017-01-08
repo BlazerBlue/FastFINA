@@ -23,6 +23,7 @@ in PC app that will be the interface that most people use
 #include "CycleDrive.h"
 #include "LedDrive.h"
 #include "ServoDrive.h"
+#include <math.h>
 
 //Global variables for command input processes
 int cmdSize;
@@ -180,21 +181,49 @@ void detectCmds()
 			Serial.print("Detector read = "); Serial.println(rd);
 			break;
 		case 1:  // read N times
-			float sumReads = 0;
-			float sumReadsSq = 0;
+			float sumReads;
+			float sumReadsSq;
+			float meanRead;
+			double varRead;
+			double sdRead;
+			unsigned long int startRead;
+			unsigned long int stopRead;
+			unsigned long int msRead;
+			sumReads = 0;
+			sumReadsSq = 0;
+			startRead = millis();
 			for (int i = 0; i < nRepsRead; i++)
 			{
-				int r = analogRead(pinAnalogDetector);
+				float r = analogRead(pinAnalogDetector);
 				Serial.println(r);
 				sumReads += r ;
-				sumReadsSq += r^2;
+				sumReadsSq += r*r;
 			}
-			float avgRead = sumReads / nRepsRead;
-			float varRead = sumReadsSq-nRepsRead * avgRead*avgRead;
-			float sdRead = sqrt(varRead);
+			stopRead = millis();
+			msRead = stopRead - startRead;
+			meanRead = sumReads / nRepsRead;
+			varRead = (sumReadsSq  - nRepsRead*sq(meanRead)) / (nRepsRead-1);
+			sdRead = sqrt(varRead);
+
 			Serial.print("N Reads = "); Serial.println(nRepsRead);
-			Serial.print("Mean = "); Serial.println(avgRead);
+			Serial.print("Read time [ms] = "); Serial.println(msRead);
+			Serial.print("Read cycles = "); Serial.println(msRead*.06);
+			Serial.print("Mean = "); Serial.println(meanRead);
 			Serial.print("Var = "); Serial.println(varRead);
+			Serial.print("SD = "); Serial.println(sdRead);
+			
+			break;
+		case 2:
+			nRepsRead = cmdParameter[1];
+			if (nRepsRead < 2)
+			{
+				Serial.println("N must be > 1");
+			}
+			else
+			{
+				Serial.print("N = ");
+				Serial.println(nRepsRead);
+			}
 			break;
 		}
 	}
